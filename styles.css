@@ -1,0 +1,181 @@
+*, *::before, *::after { box-sizing: border-box; }
+:root { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+body { margin: 0; background: #f6f7fb; color: #111; }
+.wrap { max-width: 980px; margin: 20px auto; padding: 0 14px; }
+.card { background: #fff; border: 1px solid #e8e8ee; border-radius: 14px; padding: 16px; box-shadow: 0 1px 0 rgba(0,0,0,.03); margin-bottom: 14px; }
+h1 { margin: 0 0 8px; font-size: 22px; }
+h2 { margin: 0 0 10px; font-size: 18px; }
+.muted { color: #5a5f6a; }
+.small { font-size: 12px; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 860px){ .grid { grid-template-columns: 1fr; } }
+.field label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+.field select, .field input { width: 100%; padding: 10px 10px; border: 1px solid #dfe2ea; border-radius: 10px; font-size: 14px; }
+.hint { margin-top: 6px; font-size: 12px; }
+.details { padding: 8px 10px; border: 1px dashed #dfe2ea; border-radius: 10px; background: #fbfcff; }
+.tableWrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 10px; border-bottom: 1px solid #eef0f6; }
+th { font-size: 12px; color: #5a5f6a; text-transform: uppercase; letter-spacing: .04em; }
+.summary { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+@media (max-width: 860px){ .summary { grid-template-columns: 1fr; } }
+.k { font-weight: 700; }
+.total { padding-top: 10px; border-top: 1px solid #eef0f6; }
+
+/* mac-like controls */
+.field select, .field input {
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.field select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(0,0,0,0.45) 50%),
+    linear-gradient(135deg, rgba(0,0,0,0.45) 50%, transparent 50%),
+    linear-gradient(to right, transparent, transparent);
+  background-position:
+    calc(100% - 18px) calc(1em + 2px),
+    calc(100% - 13px) calc(1em + 2px),
+    0 0;
+  background-size: 5px 5px, 5px 5px, 100% 100%;
+  background-repeat: no-repeat;
+  padding-right: 34px;
+}
+
+.field select:focus, .field input:focus {
+  outline: none;
+  border-color: rgba(0,0,0,0.25);
+  box-shadow: 0 0 0 4px rgba(0,0,0,0.06);
+}
+
+/* slightly different look for State selector */
+#state {
+  background: rgba(255,255,255,0.55);
+}
+
+
+/* mac-like buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+}
+.btn:hover { border-color: rgba(0,0,0,0.18); }
+.btn:active { transform: translateY(0.5px); }
+.btn.ghost { width: 100%; justify-content: flex-start; }
+
+.rateRow { display: flex; gap: 10px; }
+.rateRow input { flex: 1; }
+
+/* disclosure */
+.disclosure {
+  margin-top: 12px;
+  border-top: 1px solid #eef0f6;
+  padding-top: 12px;
+}
+.disclosure summary { list-style: none; }
+.disclosure summary::-webkit-details-marker { display: none; }
+.padTop { margin-top: 10px; }
+
+/* smoother, more mac-like controls everywhere */
+.field select, .field input {
+  background: rgba(255,255,255,0.62);
+  border-color: rgba(0,0,0,0.10);
+}
+.field select:hover, .field input:hover {
+  border-color: rgba(0,0,0,0.16);
+}
+
+/* make State selector slightly more translucent & "darker arrow" */
+#state {
+  background: rgba(255,255,255,0.52);
+}
+
+/* reduce clutter spacing */
+.card { backdrop-filter: blur(0px); }
+
+
+/* make everything mac-like */
+.field select, .field input, .btn, .details {
+  border-radius: 12px;
+}
+
+.field input#location {
+  background: rgba(255,255,255,0.58);
+}
+
+/* positions table */
+table.positions td:first-child { width: 55%; }
+table.positions .rowTotal td { font-weight: 800; }
+table.positions .rowTotal td:last-child { font-size: 16px; }
+
+/* slightly softer cards */
+.card { border-color: rgba(0,0,0,0.08); }
+
+/* disclosure button: more mac-like */
+.disclosure .btn.ghost {
+  background: rgba(255,255,255,0.56);
+}
+
+.summary.onecol { grid-template-columns: 1fr; }
+
+
+/* Ensure select looks like a dropdown on all browsers */
+.field select {
+  cursor: pointer;
+}
+.field select, .field input {
+  height: 42px;
+}
+
+
+/* grid spanning */
+.span2 { grid-column: 1 / -1; }
+@media (max-width: 860px){ .span2 { grid-column: auto; } }
+
+/* prevent overlaps: details can grow */
+.details { min-height: 42px; height: auto; }
+
+
+/* location dropdown - mac-like gray translucent */
+#locationSelect {
+  background: rgba(120,120,128,0.14);
+  border: 1px solid rgba(0,0,0,0.10);
+}
+#locationSelect:hover { border-color: rgba(0,0,0,0.16); }
+#locationSelect:focus {
+  outline: none;
+  border-color: rgba(0,0,0,0.22);
+  box-shadow: 0 0 0 4px rgba(0,0,0,0.06);
+}
+
+#rowAuctionFee.hidden{display:none;}
+
+
+/* v20 fixes: prevent field overlap in controls */
+.controlsGrid{
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.controlsGrid .field{ min-width: 0; }
+.controlsGrid input, .controlsGrid select{ width: 100%; }
+@media (max-width: 1100px){
+  .controlsGrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 700px){
+  .controlsGrid{ grid-template-columns: 1fr; }
+}
+
+.field select, .field input { box-sizing: border-box; }

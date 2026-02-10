@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DARSI — калькулятор доставки (онлайн)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="card">
+      <h1>DARSI LLC — оптовый калькулятор доставки</h1>
+      <p class="muted">Выбери аукцион → локацию. Калькулятор покажет Доставка США, лучший порт, море и обязательные портовые расходы.</p>
+    </header>
+
+    <section class="card grid">
+  <div class="field">
+    <label for="auction">Аукцион</label>
+    <select id="auction"></select>
+  </div>
+
+  
+
+<div class="field">
+    <label for="vehicleType">Тип авто</label>
+    <select id="vehicleType">
+      <option value="Sedan">Sedan</option>
+      <option value="SUV">SUV</option>
+    </select>
+  </div>
+
+  
+
+<div class="field">
+  <label for="priceUsd">Цена авто (USD)</label>
+  <input id="priceUsd" type="number" min="0" step="1" placeholder="Например: 6500" />
+</div>
+
+<div class="field">
+  <label for="year">Год выпуска</label>
+  <input id="year" type="number" min="1950" max="2030" step="1" placeholder="Например: 2018" />
+</div>
+
+<div class="field">
+  <label for="fuel">Тип двигателя</label>
+  <select id="fuel">
+    <option value="gas">Бензин</option>
+    <option value="diesel">Дизель</option>
+    <option value="electric">Электро</option>
+  </select>
+</div>
+
+<div class="field">
+  <label id="engineLabel" for="engineValue">Объём двигателя (см³)</label>
+  <input id="engineValue" type="number" min="0" step="1" placeholder="Например: 1998" />
+</div>
+
+<div class="field span2">
+  <label for="locationSelect">Локация</label>
+  <select id="locationSelect"></select>
+  <div class="hint muted">Нажми стрелочку и выбери локацию. Список меняется при выборе аукциона.</div>
+</div>
+
+  <div class="field span2">
+    <label>Детали</label>
+    <div id="details" class="details muted">—</div>
+  </div>
+</section>
+
+    <section class="card">
+  <h2>Доставка США</h2>
+
+  <div class="summary">
+    <div><span class="k">Рекомендованный порт:</span> <span id="bestPort">—</span></div>
+    <div><span class="k">Land до порта:</span> <span id="bestLand">—</span></div>
+  </div>
+<details class="disclosure">
+    <summary class="btn ghost">Показать цены до остальных портов</summary>
+    <div class="tableWrap padTop">
+      <table>
+        <thead>
+          <tr>
+            <th>Порт</th>
+            <th>Цена, $</th>
+          </tr>
+        </thead>
+        <tbody id="landTable"></tbody>
+      </table>
+    </div>
+  </details>
+</section>
+
+    <section class="card">
+  <h2>Море до порта Клайпеда</h2>
+  <div class="summary onecol">
+        <div><span class="k">Море за 1 авто :</span> <span id="seaPerCar">—</span></div>
+      </div>
+
+      <div class="summary onecol">
+        <div><span class="k">Экспедирование Клайпеда:</span> <span id="klaipedaUsd">—</span> <span class="muted small">(350 EUR)</span></div>
+      </div>
+  <p class="muted small">Sedan = морской тариф “4 авто”, SUV = морской тариф “3 авто”. Морской тариф указан за 1 авто. Направление: США → порт Клайпеда.</p>
+</section>
+
+    
+  </div>
+
+<section class="card">
+  <h2>Позиции расчёта</h2>
+  <div class="tableWrap">
+    <table class="positions">
+      <thead>
+        <tr>
+          <th>Позиция</th>
+          <th>Значение</th>
+        </tr>
+      </thead>
+      <tbody>
+  <tr><td>Аукцион</td><td id="posAuction">—</td></tr>
+  <tr><td>Локация (штат)</td><td id="posLocation">—</td></tr>
+  <tr><td>Тип авто</td><td id="posType">—</td></tr>
+
+  <tr><td>Цена покупки авто</td><td id="posPrice">—</td></tr>
+  <tr id="rowAuctionFee"><td>Комиссия аукциона</td><td id="posAuctionFee">—</td></tr>
+
+  <tr><td>Доставка США</td><td id="posLand">—</td></tr>
+  <tr><td>Морская доставка в Klaipeda</td><td id="posSea">—</td></tr>
+  <tr><td>Экспедирование Klaipeda (350 EUR → USD)</td><td id="posKlaipeda">—</td></tr>
+  <tr><td>Доставка Klaipeda → Киев</td><td id="posKlaipedaKyiv">—</td></tr>
+
+  <tr><td>Таможенный платёж Украина</td><td id="posCustomsPay">—</td></tr>
+
+  <tr class="rowTotal"><td>ИТОГО под ключ (Киев)</td><td id="posGrandTotal">—</td></tr>
+</tbody>
+    </table>
+  </div>
+</section>
+
+  <script src="app.js"></script>
+</body>
+</html>
