@@ -153,6 +153,7 @@ function getLocationsForAuctionState(auction, state){
 }
 
 function setOptions(select, options){
+  if(!select) return;
   select.innerHTML = "";
   for(const v of options){
     const opt = document.createElement("option");
@@ -164,7 +165,7 @@ function setOptions(select, options){
 
 /* ECB reference rates via Frankfurter (no key) */
 async function fetchEurUsd(){
-  const url = "https://api.frankfurter.dev/latest?from=EUR&to=USD";
+  const url = "https://api.frankfurter.app/latest?from=EUR&to=USD";
   const res = await fetch(url, { cache: "no-store" });
   const json = await res.json();
   const rate = json && json.rates && json.rates.USD;
@@ -330,6 +331,23 @@ const totalEl = document.getElementById("posGrandTotal");
 
 /* ---------- init ---------- */
 async function init(){
+  // theme
+  const btn = document.getElementById("themeToggle");
+  const saved = localStorage.getItem("darsi_theme");
+  if(saved){
+    document.body.setAttribute("data-theme", saved);
+    if(btn) btn.textContent = (saved==="light" ? "☀️" : "🌙");
+  }
+  if(btn){
+    btn.addEventListener("click", () => {
+      const cur = document.body.getAttribute("data-theme") || "dark";
+      const next = (cur === "dark") ? "light" : "dark";
+      document.body.setAttribute("data-theme", next);
+      localStorage.setItem("darsi_theme", next);
+      btn.textContent = (next==="light" ? "☀️" : "🌙");
+    });
+  }
+
   // load data
   const res = await fetch("data.json");
   DB = await res.json();
@@ -348,6 +366,8 @@ el("auction").value = DB.auctions[0] || "";
 
 // state + locations for selected auction
 rebuildLocationList();
+  const lsInput = document.getElementById('locationSearch');
+  if(lsInput){ lsInput.addEventListener('input', () => applyLocationFilter()); }
 
 // choose first location
 const locSel = el("locationSelect");
@@ -392,4 +412,34 @@ el("fuel").addEventListener("change", () => { updateEngineLabel(); render(); });
   render();
 }
 
-init();
+document.addEventListener("DOMContentLoaded", () => { init(); });
+
+
+function applyLocationFilter(){
+  const q = (document.getElementById("locationSearch")?.value || "").trim().toLowerCase();
+  const select = document.getElementById("locationSelect");
+  if(!select) return;
+
+  if(!q){
+    rebuildLocationList();
+    return;
+  }
+
+  const all = getFilteredRecords(); // filtered by auction
+  const filtered = all.filter(r => `${r.location} (${r.state})`.toLowerCase().includes(q));
+
+  const current = select.value;
+  select.innerHTML = "";
+  for(const r of filtered){
+    const opt = document.createElement("option");
+    opt.value = r.id;
+    opt.textContent = `${r.location} (${r.state})`;
+    select.appendChild(opt);
+  }
+
+  const still = Array.from(select.options).some(o => o.value === current);
+  if(still) select.value = current;
+  else if(select.options.length) select.selectedIndex = 0;
+
+  render();
+}
