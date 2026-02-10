@@ -324,7 +324,8 @@ const grand = (typeof priceOk === "number" &&
   ? (priceOk + (auctionFee || 0) + logisticsTotal + customsPay)
   : null;
 
-el("posGrandTotal").textContent = fmt2(grand);
+const totalEl = document.getElementById("posGrandTotal");
+  if(totalEl){ totalEl.textContent = fmt2(grand); totalEl.classList.remove("flash"); void totalEl.offsetWidth; totalEl.classList.add("flash"); }
 }
 
 /* ---------- init ---------- */
